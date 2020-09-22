@@ -124,7 +124,7 @@ class MainWindow(Frame):
 
 
 if __name__ == '__main__':
-    from tkinter import Tk, BooleanVar
+    from tkinter import Tk
     from examples.measurement_app.ui import MainWindowViewModel
 
 

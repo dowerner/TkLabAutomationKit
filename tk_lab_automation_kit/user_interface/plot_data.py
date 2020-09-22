@@ -71,7 +71,7 @@ class PlotData(object):
         Sets the text of this plot.
         :param txt: plot text
         """
-        if not type(txt) is str:
+        if txt is not None and not type(txt) is str:
             raise TypeError('Given argument is of type "{}" but "{}" was expected.'.format(type(txt), str))
 
         self._text = txt

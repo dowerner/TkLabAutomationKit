@@ -3,10 +3,11 @@ from tkinter import Frame, BOTTOM, BOTH, TOP
 from tk_lab_automation_kit.user_interface import PlotData
 from tk_lab_automation_kit.core import ObservableList
 import matplotlib
+matplotlib.use('TkAgg')     # enable that plots can be embedded into widgets
+#matplotlib.use("qt4agg")
 from matplotlib.collections import PathCollection
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
 from matplotlib.figure import Figure
-matplotlib.use('TkAgg')     # enable that plots can be embedded into widgets
 
 
 class PlotControl(Frame):
@@ -154,7 +155,7 @@ class PlotControl(Frame):
         self.ax.hold = self._hold
 
         self._canvas = FigureCanvasTkAgg(self._figure, self)  # add figure to canvas
-        self._canvas.draw()  # show canvas
+        self._dispatch_to_main_thread_(self._canvas.draw)   # show canvas
         self._canvas.get_tk_widget().pack(side=BOTTOM, fill=BOTH, expand=True)  # place canvas
 
         if self._enable_toolbar:
@@ -164,8 +165,10 @@ class PlotControl(Frame):
 
     def _update_canvas_(self):
         self._handle_scaling_()       # setup proper axis scaling
-        self._canvas.draw()             # redraw canvas
-        # self._canvas.flush_events()   # trigger UI update
+        self._dispatch_to_main_thread_(self._canvas.draw) # redraw canvas
+
+    def _dispatch_to_main_thread_(self, f):
+        self._root.after(0, self._canvas.draw)
 
     def _source_cleared_(self):
         """Remove old plot"""

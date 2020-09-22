@@ -57,10 +57,10 @@ class CustomFrame(LabelFrame):
     def _set_enabled_(self, *args):
         is_enabled = self.enabled
         for child in self._children:
-            if child is None:
+            if child is None or 'state' not in child.config():
                 continue
             child.config(state=NORMAL if is_enabled else DISABLED)
-
+            
     def clear(self):
         """
         Remove all child ui controls from the frame.

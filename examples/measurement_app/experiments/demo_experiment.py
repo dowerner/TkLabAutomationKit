@@ -7,6 +7,10 @@ import numpy as np
 
 class DemoExperiment(Experiment):
 
+    def __init__(self):
+        super().__init__()
+        self.csv_path = 'res.csv'
+
     def run(self, handler: ExperimentHandler):
         self.plot_collection.clear()
         plot1 = PlotData(ObservableList(), ObservableList(), marker='.')
