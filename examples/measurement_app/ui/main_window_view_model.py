@@ -266,8 +266,9 @@ class MainWindowViewModel(object):
             screenshot_path = result
 
         x, y = self._root.winfo_x(), self._root.winfo_y()   # capture window coordinates
-        _capture_offset_x = 9   # x offset of window to coincide with screenshot
-        _capture_offset_y = 32  # y offset of window to coincide with screenshot
+        dpi = self._root.winfo_fpixels('1i')
+        _capture_offset_x = 9 * dpi / 96.0   # x offset of window to coincide with screenshot
+        _capture_offset_y = 32 * dpi / 96.0  # y offset of window to coincide with screenshot
         width, height = self._root.winfo_width(), self._root.winfo_height() # capture window dimensions
         # get screenshot
         im = grab(bbox=(x + _capture_offset_x, y,

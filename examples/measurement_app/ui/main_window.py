@@ -126,6 +126,14 @@ class MainWindow(Frame):
 if __name__ == '__main__':
     from tkinter import Tk
     from examples.measurement_app.ui import MainWindowViewModel
+    import platform
+
+    if platform.system() == 'Windows':
+        import ctypes
+        try:
+            ctypes.windll.shcore.SetProcessDpiAwareness(2) # if your windows version >= 8.1
+        except:
+            ctypes.windll.user32.SetProcessDPIAware() # win 8.0 or less 
 
 
     root = Tk()     # create root of user interface hierarchy
